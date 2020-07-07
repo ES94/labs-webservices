@@ -1,0 +1,1 @@
+10/10/2019 10:17:23 --- typeMethodTypeOfOrdered: ['Traceback (most recent call last):\n', '  File "/home/facebook/ws/metrics.py", line 426, in typeMethodTypeOfOrdered\n    claves = values["value"].keys()\n', ": 'int' object has no attribute 'keys'\n"]
