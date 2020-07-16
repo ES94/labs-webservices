@@ -7,12 +7,17 @@ import requests
 import time
 import simplejson as json
 import subprocess
+from importlib import reload
 from waitress import serve
 from flask import Flask
 from flask import request
 from datetime import date, datetime
 from time import gmtime, strftime
+from werkzeug.serving import run_simple
 
+
+__appHostName = '0.0.0.0'
+__appPort = 5002
 app = Flask(__name__)
 logs_path = "D:\\eniac\\LABS357 Dashboard\\Webservices LABS\\ws\\logs\\"
 classes_path = "D:\\eniac\\LABS357 Dashboard\\Webservices LABS\\ws\\classes\\"
@@ -109,7 +114,6 @@ def deactivator(): #Detener script de middle corriendo en la pc.
 if __name__ == '__main__':
     try:
         reload(sys)
-        sys.setdefaultencoding('utf8')
-        serve(app, host='0.0.0.0', port=5002)
+        run_simple(__appHostName, __appPort, app)
     except:
         setLog()
