@@ -19,7 +19,7 @@ from flask import Flask, request, Blueprint
 from .fb_settings import FbSettings
 from classes.database import Database
 from classes.utils import Utils
-from facebook import facebook_blueprint
+from . import facebook_blueprint
 
 
 graphUrl = FbSettings.graphUrl
