@@ -16,10 +16,11 @@ import MySQLdb as db
 from waitress import serve
 from flask import Flask, request, Blueprint
 
+from . import facebook_blueprint
 from .fb_settings import FbSettings
 from classes.database import Database
+from classes.settings import Settings
 from classes.utils import Utils
-from . import facebook_blueprint
 
 
 graphUrl = FbSettings.graphUrl
@@ -34,20 +35,20 @@ def buildUrlPost(pageId, postId, token, metric, date_since, date_until):
 
 def typeMethodPostsVideos(method_name): #Numero de visitas a post o reproducciones de videos (VER)
 	try:
-		isValid = isValidJsonData(request)
+		isValid = Utils.isValidJsonData(request)
 		if isValid:
 			jsonData = request.get_json()
-			validArgs = areValidPostArguments(jsonData, ["account", "date_since", "date_until", "posts"])
+			validArgs = Utils.areValidPostArguments(jsonData, ["account", "date_since", "date_until", "posts"])
 			if validArgs["status"] == "error":
 				return json.dumps(validArgs)
-			if areValidDatesInputUnix(jsonData["date_since"], jsonData["date_until"]):
-				if areDatesDifferences90days(jsonData["date_since"], jsonData["date_until"]):#Chequeo diferencia 90 dias
-					res_token = getToken(jsonData["account"])
+			if Utils.areValidDatesInputUnix(jsonData["date_since"], jsonData["date_until"]):
+				if Utils.areDatesDifferences90days(jsonData["date_since"], jsonData["date_until"]):#Chequeo diferencia 90 dias
+					res_token = Utils.getToken(Settings.host, Settings.user, Settings.pswd, jsonData["account"])
 					token = res_token["message"]
-					pageId = getPageId(token)
+					pageId = Utils.getPageId(FbSettings.graphUrlId, token)
 					jRes = [] #lista de datos que se muestran en json response
 					for post in jsonData["posts"]:
-						url = buildUrlPost(pageId, post, token, method_name, jsonData["date_since"], jsonData["date_until"])
+						url = Utils.buildUrlPost(pageId, post, token, method_name, jsonData["date_since"], jsonData["date_until"])
 						print(url)
 						req = requests.get(url)
 						res = json.loads(req.text)
@@ -57,7 +58,7 @@ def typeMethodPostsVideos(method_name): #Numero de visitas a post o reproduccion
 								jRes.append({
 									post : valor_dato  #idPost : valor
 								})
-					jsonResponse = getResponseJson("success", "", False)
+					jsonResponse = Utils.getResponseJson("success", "", False)
 					jsonResponse["data"] = jRes
 					return json.dumps(jsonResponse)
 				else:

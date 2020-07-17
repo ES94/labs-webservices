@@ -16,10 +16,11 @@ import MySQLdb as db
 from waitress import serve
 from flask import Flask, request, Blueprint
 
+from . import facebook_blueprint
 from .fb_settings import FbSettings
 from classes.database import Database
+from classes.settings import Settings
 from classes.utils import Utils
-from . import facebook_blueprint
 
 
 graphUrl = FbSettings.graphUrl
@@ -30,17 +31,17 @@ graphUrlVideos = FbSettings.graphUrlVideos
 
 def typeMethodTypeOfOrdered(method_name): #Datos agrupados y ordenados por tipo de.. (reacciones, num. de veces, etc)
 	try:
-		isValid = isValidJsonData(request)
+		isValid = Utils.isValidJsonData(request)
 		if isValid:
 			jsonData = request.get_json()
-			validArgs = areValidPostArguments(jsonData, ["account", "date_since", "date_until"])
+			validArgs = Utils.areValidPostArguments(jsonData, ["account", "date_since", "date_until"])
 			if validArgs["status"] == "error":
 					return json.dumps(validArgs)
-			if areValidDatesInputUnix(jsonData["date_since"], jsonData["date_until"]):
-				if areDatesDifferences90days(jsonData["date_since"], jsonData["date_until"]):#Chequeo diferencia 90 dias
-					res_token = getToken(jsonData["account"])
+			if Utils.areValidDatesInputUnix(jsonData["date_since"], jsonData["date_until"]):
+				if Utils.areDatesDifferences90days(jsonData["date_since"], jsonData["date_until"]):#Chequeo diferencia 90 dias
+					res_token = Utils.getToken(Settings.host, Settings.user, Settings.pswd, jsonData["account"])
 					token = res_token["message"]
-					url = buildUrl(graphUrl, token, method_name, jsonData["date_since"], jsonData["date_until"])
+					url = Utils.buildUrl(graphUrl, token, method_name, jsonData["date_since"], jsonData["date_until"])
 					req = requests.get(url)
 					res = json.loads(req.text)
 					jRes = [] #lista de datos que se muestran en json response
@@ -55,7 +56,7 @@ def typeMethodTypeOfOrdered(method_name): #Datos agrupados y ordenados por tipo 
 									valor_dato = values["value"][c] #valor de la clave 1, valor de la clave 2..
 									clave_dato = c
 									dic_info[clave_dato] = valor_dato
-								dic_resultado = orderDictionary(dic_info)
+								dic_resultado = Utils.orderDictionary(dic_info)
 								jRes.append({
 									fecha: dic_resultado                                     
 								})

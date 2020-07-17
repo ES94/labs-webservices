@@ -71,7 +71,7 @@ class Utils:
 
     @staticmethod
     def getToken(host, user, pswd, account):
-    	DATABASE = Database.getInstance(host,user,pswd,"plataforma")
+    	DATABASE = Database.getInstance(host,user,pswd,"dev_plataforma")
     	query = "SELECT I.password FROM instancias I"
     	query = query + " WHERE I.id_medio = 2"
     	query = query + " and I.id_cuenta =" + str(account)
