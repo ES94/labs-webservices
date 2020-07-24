@@ -50,3 +50,8 @@ class Error:
         ("errno", 9),
         ("errmsg", "An error has occurred during user creation")
     ])
+
+    NO_RESULTS = OrderedDict([
+        ("errno", 10),
+        ("errmsg", "No matching results found")
+    ])
