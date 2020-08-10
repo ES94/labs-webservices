@@ -1,25 +1,9 @@
-import os
-import inspect
-import traceback
 import sys
-import requests
-import simplejson as json
-import calendar
-import time
-import collections
-import hashlib
-from time import gmtime, strftime
-from datetime import date, datetime
 from importlib import reload
 
-import MySQLdb
-from waitress import serve
-from flask import Flask, request
-from werkzeug import serving, wrappers
+from flask import Flask
+from werkzeug import serving
 
-
-from classes.database import Database
-from classes.settings import Settings
 from classes.utils import Utils
 from chatbots import chatbots_blueprint
 from chatbots.facebook import facebook_blueprint

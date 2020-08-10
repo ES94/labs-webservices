@@ -23,9 +23,9 @@ from .settings import Settings
 from classes.database import Database
 
 
-host = Settings.host
-user = Settings.user
-pswd = Settings.pswd
+host = Settings.DB_HOST
+user = Settings.DB_USER
+pswd = Settings.DB_PSWD
 
 
 class Utils:
