@@ -1,9 +1,11 @@
+import os
 import sys
 from importlib import reload
 
 from flask import Flask
 from werkzeug import serving
 
+from authentication import auth_blueprint
 from classes.utils import Utils
 from chatbots import chatbots_blueprint
 from chatbots.facebook import facebook_blueprint
@@ -16,6 +18,7 @@ __appHostname = '0.0.0.0'
 __appPort = 5001
 app = Flask(__name__)
 
+app.register_blueprint(auth_blueprint, url_prefix='/auth')
 app.register_blueprint(chatbots_blueprint, url_prefix='/chatbots')
 app.register_blueprint(facebook_blueprint, url_prefix='/chatbots/fb')
 app.register_blueprint(instagram_blueprint, url_prefix='/chatbots/ig')

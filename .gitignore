@@ -140,3 +140,4 @@ cython_debug/
 # Misc project files
 databases/
 logs/
+keys/

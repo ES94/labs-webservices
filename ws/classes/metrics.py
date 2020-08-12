@@ -171,13 +171,13 @@ class Metric:
         forms = {}
 
         for form in forms_list:
-            # if form[0] not in forms:
-            #     forms[form[0]] = []
-            forms[form[0]] = {
+            if form[0] not in forms:
+                forms[form[0]] = []
+            forms[form[0]].append({
                 '{}'.format(form[1]): {
                     'cant_formularios': form[2],
                     'cant_usuarios': form[3]
                 }
-            }
+            })
         
         return forms

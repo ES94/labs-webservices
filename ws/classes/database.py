@@ -91,6 +91,28 @@ class Database(object):
 		except Exception as e:
 			self.__setLog()
 			return None
+	
+	def callProc(self, spName, args, fetch):
+		try:
+			dbCon 	= self.__getConnection()
+			dbCur = dbCon.cursor(db.cursors.DictCursor)
+			if args is not None:
+				dbCur.callproc(spName, args)
+			else:
+				dbCur.callproc(spName)
+			
+			if fetch == True:
+				res = dbCur.fetchall()
+			else:
+				res = dbCur.fetchone()
+			
+			dbCur.close()
+			dbCon.commit()
+			self.__closeConnection()
+			return res
+		except Exception as e:
+			self.__setLog()
+			return None
 			
 	def executeCommand(self, command, args):
 		try:

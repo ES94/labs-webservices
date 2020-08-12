@@ -2,8 +2,8 @@ import requests
 import simplejson as json
 from flask import request
 
-from classes.settings import Settings
 from classes.utils import Utils
+from settings import Settings
 
 
 graphUrl = "https://graph.facebook.com/v4.0/me/insights?"
@@ -27,7 +27,14 @@ class Facebook:
     					return json.dumps(validArgs)
     			if Utils.areValidDatesInputUnix(jsonData["date_since"], jsonData["date_until"]):
     				if Utils.areDatesDifferences90days(jsonData["date_since"], jsonData["date_until"]):#Chequeo diferencia 90 dias
-    					res_token = Utils.getToken(Settings.DB_HOST, Settings.DB_USER, Settings.DB_PSWD, jsonData["account"])
+    					res_token = Utils.getToken(
+							Settings.PLATFORM_DB_HOST, 
+							Settings.PLATFORM_DB_USER, 
+							Settings.PLATFORM_DB_PSWD, 
+							Settings.PLATFORM_DB_NAME, 
+							jsonData["account"], 
+							2
+						)
     					token = res_token["message"]
     					url = Utils.buildUrl(graphUrl, token, method_name, jsonData["date_since"], jsonData["date_until"])
     					req = requests.get(url)
@@ -146,7 +153,14 @@ class Facebook:
     				return json.dumps(validArgs)
     			if Utils.areValidDatesInputUnix(jsonData["date_since"], jsonData["date_until"]):#Chequeo fechas UNIX validas
     				if Utils.areDatesDifferences90days(jsonData["date_since"], jsonData["date_until"]):#Chequeo diferencia 90 dias
-    					res_token = Utils.getToken(Settings.DB_HOST, Settings.DB_USER, Settings.DB_PSWD, jsonData["account"])
+    					res_token = Utils.getToken(
+							Settings.PLATFORM_DB_HOST, 
+							Settings.PLATFORM_DB_USER, 
+							Settings.PLATFORM_DB_PSWD, 
+							Settings.PLATFORM_DB_NAME, 
+							jsonData["account"], 
+							2
+						)
     					token = res_token["message"]
     					url = Utils.buildUrl(graphUrl, token, method_name, jsonData["date_since"], jsonData["date_until"]) 
     					req = requests.get(url)
@@ -203,7 +217,14 @@ class Facebook:
     					return json.dumps(validArgs)
     			if Utils.areValidDatesInputUnix(jsonData["date_since"], jsonData["date_until"]):
     				if Utils.areDatesDifferences90days(jsonData["date_since"], jsonData["date_until"]):#Chequeo diferencia 90 dias
-    					res_token = Utils.getToken(Settings.DB_HOST, Settings.DB_USER, Settings.DB_PSWD, jsonData["account"])
+    					res_token = Utils.getToken(
+							Settings.PLATFORM_DB_HOST, 
+							Settings.PLATFORM_DB_USER, 
+							Settings.PLATFORM_DB_PSWD, 
+							Settings.PLATFORM_DB_NAME, 
+							jsonData["account"], 
+							2
+						)
     					token = res_token["message"]
     					url = Utils.buildUrl(graphUrl, token, method_name, jsonData["date_since"], jsonData["date_until"])
     					req = requests.get(url)
@@ -241,7 +262,14 @@ class Facebook:
     				return json.dumps(validArgs)
     			if Utils.areValidDatesInputUnix(jsonData["date_since"], jsonData["date_until"]):
     				if Utils.areDatesDifferences90days(jsonData["date_since"], jsonData["date_until"]):#Chequeo diferencia 90 dias
-    					res_token = Utils.getToken(Settings.DB_HOST, Settings.DB_USER, Settings.DB_PSWD, jsonData["account"])
+    					res_token = Utils.getToken(
+							Settings.PLATFORM_DB_HOST, 
+							Settings.PLATFORM_DB_USER, 
+							Settings.PLATFORM_DB_PSWD, 
+							Settings.PLATFORM_DB_NAME, 
+							jsonData["account"], 
+							2
+						)
     					token = res_token["message"]
     					pageId = Utils.getPageId(FbSettings.graphUrlId, token)
     					jRes = [] #lista de datos que se muestran en json response
@@ -278,7 +306,14 @@ class Facebook:
     					return json.dumps(validArgs)
     			if Utils.areValidDatesInputUnix(jsonData["date_since"], jsonData["date_until"]):
     				if Utils.areDatesDifferences90days(jsonData["date_since"], jsonData["date_until"]):#Chequeo diferencia 90 dias
-    					res_token = Utils.getToken(Settings.DB_HOST, Settings.DB_USER, Settings.DB_PSWD, jsonData["account"])
+    					res_token = Utils.getToken(
+							Settings.PLATFORM_DB_HOST, 
+							Settings.PLATFORM_DB_USER, 
+							Settings.PLATFORM_DB_PSWD, 
+							Settings.PLATFORM_DB_NAME, 
+							jsonData["account"], 
+							2
+						)
     					token = res_token["message"]
     					url = Utils.buildUrl(graphUrl,token, method_name, jsonData["date_since"], jsonData["date_until"])
     					req = requests.get(url)
@@ -316,7 +351,14 @@ class Facebook:
     					return json.dumps(validArgs)
     			if Utils.areValidDatesInputUnix(jsonData["date_since"], jsonData["date_until"]):
     				if Utils.areDatesDifferences90days(jsonData["date_since"], jsonData["date_until"]):#Chequeo diferencia 90 dias
-    					res_token = Utils.getToken(Settings.DB_HOST, Settings.DB_USER, Settings.DB_PSWD, jsonData["account"])
+    					res_token = Utils.getToken(
+							Settings.PLATFORM_DB_HOST, 
+							Settings.PLATFORM_DB_USER, 
+							Settings.PLATFORM_DB_PSWD, 
+							Settings.PLATFORM_DB_NAME, 
+							jsonData["account"], 
+							2
+						)
     					token = res_token["message"]
     					url = Utils.buildUrl(graphUrl, token, method_name, jsonData["date_since"], jsonData["date_until"])
     					req = requests.get(url)
