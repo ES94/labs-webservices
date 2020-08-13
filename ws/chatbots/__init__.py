@@ -26,7 +26,6 @@ def get_bot_total_users():
 	response = None
 	account = None
 	id_media = None
-	date_since = None
 	date_until = None
 
 	try:
@@ -44,12 +43,11 @@ def get_bot_total_users():
 					json_data = request.get_json()
 					validate_arguments = Utils.areValidPostArguments(
 						json_data, 
-						['account', 'date_since', 'date_until']
+						['account', 'date_until']
 					)
 					if validate_arguments['status'] == 'success':
 						# Crear db, query, y postear query
 						account = json_data['account']
-						date_since = json_data['date_since']
 						date_until = json_data['date_until']
 						id_media = json_data['id_media'] if 'id_media' in json_data else None
 						db = Database.getInstance(
@@ -62,10 +60,9 @@ def get_bot_total_users():
 						query = """
 						SELECT date_format(e.fecha, '%Y/%m') fecha, count(DISTINCT e.numero) cantidad_usuarios
 							FROM entrantes e
-							WHERE e.fecha BETWEEN '{}' AND '{}' {}
+							WHERE e.fecha <= '{}' {}
 							GROUP BY date_format(e.fecha, '%Y/%m');
 						""".format(
-							date_since,
 							date_until,
 							"AND id_medio = {}".format(id_media) if id_media else ""
 						)
