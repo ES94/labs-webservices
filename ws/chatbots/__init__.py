@@ -70,27 +70,32 @@ def get_bot_total_users():
 
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = Metric.get_users_amount_by_date(query_result)
-							# response = query_result
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = Metric.get_users_amount_by_date(query_result)
 						else:
 							# Sin resultados
-							error = Error.NO_RESULTS
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
@@ -155,25 +160,32 @@ def get_bot_new_users():
 						
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = Metric.get_users_amount_by_date(query_result)
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = Metric.get_users_amount_by_date(query_result)
 						else:
-							error = Error.NO_RESULTS
+							# Sin resultados
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
@@ -243,27 +255,34 @@ def get_bot_blockers_unsuscribers():
 						
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = OrderedDict([
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = OrderedDict([
 								('cantidad_bajas', query_result[0][0])
 							])
 						else:
-							error = Error.NO_RESULTS
+							# Sin resultados
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
@@ -325,27 +344,34 @@ def get_bot_suscribed_users():
 
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = OrderedDict([
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = OrderedDict([
 								('cantidad_suscriptos', query_result[0][0])
 							])
 						else:
-							error = Error.NO_RESULTS
+							# Sin resultados
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
@@ -414,25 +440,32 @@ def get_bubbles_keywords_usage():
 
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = Metric.get_keywords_usage_count(query_result)
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = Metric.get_keywords_usage_count(query_result)
 						else:
-							error = Error.NO_RESULTS
+							# Sin resultados
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
@@ -487,27 +520,34 @@ def get_total_chat_derived_users():
 
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = OrderedDict([
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = OrderedDict([
 								('cantidad_derivados', query_result[0][0])
 							])
 						else:
-							error = Error.NO_RESULTS
+							# Sin resultados
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
@@ -569,27 +609,34 @@ def get_chat_derived_users_between_dates():
 
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = OrderedDict([
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = OrderedDict([
 								('cantidad_derivados', query_result[0][0])
 							])
 						else:
-							error = Error.NO_RESULTS
+							# Sin resultados
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
@@ -654,25 +701,32 @@ def get_chat_top_users():
 
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = Metric.get_top_users(query_result)
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = Metric.get_top_users(query_result)
 						else:
-							error = Error.NO_RESULTS
+							# Sin resultados
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
@@ -734,29 +788,36 @@ def get_sessions_time():
 
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = Metric.get_sessions_time(
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = Metric.get_sessions_time(
 								query_result, 
 								Settings.MAX_SESSION_TIME, 
 								sessions_details
 							)
 						else:
-							error = Error.NO_RESULTS
+							# Sin resultados
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
@@ -819,25 +880,32 @@ def get_interactions():
 
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = Metric.get_interactions(query_result)
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = Metric.get_interactions(query_result)
 						else:
-							error = Error.NO_RESULTS
+							# Sin resultados
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
@@ -905,25 +973,32 @@ def get_open_forms():
 
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = Metric.get_forms(query_result)
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = Metric.get_forms(query_result)
 						else:
-							error = Error.NO_RESULTS
+							# Sin resultados
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
@@ -992,25 +1067,32 @@ def get_send_forms():
 
 						# Si la query trae resultados, devolverlos. Caso contrario, un mensaje.
 						if query_result:
-							response = Metric.get_forms(query_result)
+							response = Utils.getResponseJson("success", "", False)
+							response['data'] = Metric.get_forms(query_result)
 						else:
-							error = Error.NO_RESULTS
+							# Sin resultados
+							error = Utils.getResponseJson("error", Error.NO_RESULTS['errmsg'], False)
+							error['errno'] = Error.NO_RESULTS['errno']
 					else:
 						# Argumentos inválidos
-						error = copy.deepcopy(Error.REQUIRED_ARGUMENTS)
-						error['errmsg'] = validate_arguments['message']
+						error = Utils.getResponseJson("error", validate_arguments['message'], False)
+						error['errno'] = Error.REQUIRED_ARGUMENTS['errno']
 				else:
 					# Token inválido
-					error = decoded_token
+					error = Utils.getResponseJson("error", decoded_token['errmsg'], False)
+					error['errno'] = decoded_token['errno']
 			else:
 				# Token inexistente
-				error = Error.TOKEN_NOT_FOUND
+				error = Utils.getResponseJson("error", Error.TOKEN_NOT_FOUND['errmsg'], False)
+				error['errno'] = Error.TOKEN_NOT_FOUND['errno']
 		else:
 			# Formato JSON inválido
-			error = Error.INVALID_REQUEST_BODY
+			error = Utils.getResponseJson("error", Error.INVALID_REQUEST_BODY['errmsg'], False)
+			error['errno'] = Error.INVALID_REQUEST_BODY['errno']
 	except:
 		Utils.setLog()
-		error = Error.PROGRAMMING_ERROR
+		error = Utils.getResponseJson("error", Error.PROGRAMMING_ERROR['errmsg'], False)
+		error['errno'] = Error.PROGRAMMING_ERROR['errno']
 
 	return wrappers.Response(
 		json.dumps(response if error is None else error),
