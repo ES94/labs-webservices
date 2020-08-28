@@ -58,10 +58,10 @@ def get_bot_total_users():
 						)
 						# Un id_media == None indica que no se especifica medio alguno.
 						query = """
-						SELECT date_format(e.fecha, '%Y/%m') fecha, count(DISTINCT e.numero) cantidad_usuarios
+						SELECT date_format(e.fecha, '%Y/%m/%d') fecha, count(DISTINCT e.numero) cantidad_usuarios
 							FROM entrantes e
 							WHERE e.fecha <= '{}' {}
-							GROUP BY date_format(e.fecha, '%Y/%m');
+							GROUP BY date_format(e.fecha, '%Y/%m/%d');
 						""".format(
 							date_until,
 							"AND id_medio = {}".format(id_media) if id_media else ""
@@ -145,12 +145,12 @@ def get_bot_new_users():
 						)
 						# Un id_media == None indica que no se especifica medio alguno.
 						query = """
-						SELECT date_format(en.fecha, '%Y/%m'), count(en.numero)
+						SELECT date_format(en.fecha, '%Y/%m/%d'), count(en.numero)
 							FROM (SELECT DISTINCT min(e.id), e.numero, e.fecha, e.id_medio
 								FROM entrantes e
 								GROUP BY e.numero) en
 							WHERE en.fecha BETWEEN '{}' AND '{}' {}
-							GROUP BY date_format(en.fecha, '%Y/%m');
+							GROUP BY date_format(en.fecha, '%Y/%m/%d');
 						""".format(
 							date_since,
 							date_until,
