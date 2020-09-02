@@ -4,7 +4,7 @@ from importlib import reload
 
 from flask import Flask
 from werkzeug import serving
-
+from flask_cors import CORS, cross_origin
 from authentication import auth_blueprint
 from classes.utils import Utils
 from chatbots import chatbots_blueprint
@@ -17,6 +17,7 @@ from chatbots.whatsapp import whatsapp_blueprint
 __appHostname = '0.0.0.0'
 __appPort = 5001
 app = Flask(__name__)
+CORS(app)
 
 app.register_blueprint(auth_blueprint, url_prefix='/auth')
 app.register_blueprint(chatbots_blueprint, url_prefix='/chatbots')
